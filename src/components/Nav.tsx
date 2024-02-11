@@ -8,6 +8,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 
 import { CgMenuGridO } from "react-icons/cg";
@@ -48,6 +49,7 @@ export default function Nav(props:{space: string}) {
                     <li className="text-xl text-white">
                         Running
                     </li>
+                    <button onClick={()=>signOut()}>Sign Out</button>
                 </ul>
             </div>
         </div>
