@@ -8,6 +8,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
+import Link from "next/link";
 
 import { CgMenuGridO } from "react-icons/cg";
 
@@ -23,13 +24,31 @@ export default function Nav(props:{space: string}) {
                     <h2 className="font-bold text-2xl text-white">{props.space}</h2>
                 </div>
                 <SheetContent side={"left"} className="flex flex-col p-5 bg-gradient-to-b from-[#6E43B1] to-[#E9DBFF]">
-                    <h2>Link</h2>
+                    <div className="flex gap-3">
+                        <div className="h-[50px] w-[50px] rounded-[50px] bg-red-500"></div>
+                        <h2>Jake Scott</h2>
+                    </div>
                 </SheetContent>
             </Sheet>
-            <div className="hidden bg-gradient-to-b from-[#6E43B1] to-[#E9DBFF] w-full h-full md:flex md:flex-col p-5">
-                <h2>Link</h2>
-                <h2>Link</h2>
-
+            <div className="hidden bg-gradient-to-b from-[#6E43B1] to-[#E9DBFF] w-full h-full md:flex md:flex-col p-5 gap-5">
+                <div className="flex gap-3 items-center font-semibold text-xl text-white">
+                    <div className="h-[50px] w-[50px] rounded-[50px] bg-red-500"></div>
+                    <h2>Jake Scott</h2>
+                </div>
+                <h2 className="text-3xl font-bold text-white">Spaces</h2>
+                <ul>
+                    <li className="text-xl text-white">
+                        <Link href={"/"}>
+                            JavaScript
+                        </Link>
+                    </li>
+                    <li className="text-xl text-white">
+                        Cooking
+                    </li>
+                    <li className="text-xl text-white">
+                        Running
+                    </li>
+                </ul>
             </div>
         </div>
 
