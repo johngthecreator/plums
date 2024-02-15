@@ -8,6 +8,7 @@ export async function POST(req: Request) {
     const newSpace = await prisma.space.create({
       data: {
         name: body.spaceName,
+        userId: body.userId,
       },
     });
     return Response.json(newSpace);
