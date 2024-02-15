@@ -8,13 +8,42 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
-import { signOut } from "next-auth/react";
-import Link from "next/link";
 
+import { useEffect, useState } from "react";
 import { CgMenuGridO } from "react-icons/cg";
+import { useSession, signOut } from "next-auth/react";
+import Link from "next/link";
+import axios from "axios";
 
 
 export default function Nav(props:{space: string}) {
+    const { data: session, status } = useSession()
+    const [spaces, setSpaces] = useState([]);
+
+    useEffect(()=>{
+        getSpaces();
+    },[])
+
+    const createNewSpace = () => {
+        axios.post('/api/create-space', {
+            spaceName: 'Fred',
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
+
+    const getSpaces = () => {
+        axios.get('/api/get-spaces')
+        .then((resp) => {
+            console.log(resp.data)
+            setSpaces(resp.data)
+        })
+    }
+
     return (
         <div>
             <Sheet>
@@ -28,8 +57,8 @@ export default function Nav(props:{space: string}) {
                     <div className="flex flex-col justify-between bg-gradient-to-b from-[#6E43B1] to-[#E9DBFF] w-full h-full p-5">
                         <div className="flex flex-col gap-3">
                             <div className="flex gap-5 mb-3 items-center font-semibold text-xl text-white">
-                                <div className="h-[50px] w-[50px] rounded-[50px] bg-[#E9DBFF]"></div>
-                                <h2>Jake Scott</h2>
+                                <img src={`${session?.user?.image}`} className="h-[50px] w-[50px] rounded-[50px] bg-[#E9DBFF]"/>
+                                <h2>{session?.user?.name}</h2>
                             </div>
                             <h2 className="text-3xl font-bold text-white">Spaces</h2>
                             <ul>
@@ -61,17 +90,21 @@ export default function Nav(props:{space: string}) {
             <div className="hidden bg-gradient-to-b from-[#6E43B1] to-[#E9DBFF] w-full h-full md:flex md:flex-col md:justify-between p-5">
                 <div className="flex flex-col gap-3">
                     <div className="flex gap-5 mb-3 items-center font-semibold text-xl text-white">
-                        <div className="h-[50px] w-[50px] rounded-[50px] bg-[#E9DBFF]"></div>
-                        <h2>Jake Scott</h2>
+                        <img src={`${session?.user?.image}`} className="h-[50px] w-[50px] rounded-[50px] bg-[#E9DBFF]"/>
+                        <h2>{session?.user?.name}</h2>
                     </div>
                     <h2 className="text-3xl font-bold text-white">Spaces</h2>
                     <ul>
-                        <li className="text-xl text-white">
-                            <Link href={"/"}>
-                                JavaScript
-                            </Link>
-                        </li>
-                        <li className="text-xl text-white">
+                        {spaces?.map((space:any, index)=>{
+                            return(
+                                <li key={index} className="text-xl text-white">
+                                    <Link href={`home/${space.space_id}`}>
+                                        {space.name}
+                                    </Link>
+                                </li>
+                            )
+                        })}
+                        {/* <li className="text-xl text-white">
                             <Link href={"/"}>
                                 Cooking
                             </Link>
@@ -80,7 +113,8 @@ export default function Nav(props:{space: string}) {
                             <Link href={"/"}>
                                 JavaScript
                             </Link>
-                        </li>
+                        </li> */}
+                        <button className="my-5" onClick={createNewSpace}> Create Space +</button>
                     </ul>
                 </div>
                 <button

@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+
+datasource db {
+  provider = "mysql"
+  url = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Space {
+  space_id Int  @id @default(autoincrement())
+  name String
+  notes Note[]
+}
+
+model Note {
+  note_id Int  @id @default(autoincrement())
+  title String
+  data String
+  space Space @relation(fields: [note_id], references: [space_id])
+}
