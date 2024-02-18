@@ -15,4 +15,4 @@ export async function POST(req: Request) {
     console.error('Request error', error);
     return Response.json({ error: 'Error creating space', success: false });
   }
-}
+} 
