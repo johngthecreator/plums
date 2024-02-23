@@ -2,23 +2,34 @@ generator client {
   provider = "prisma-client-js"
 }
 
-
 datasource db {
   provider = "mysql"
-  url = env("DATABASE_URL")
-  relationMode = "foreignKeys"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Space {
-  space_id Int  @id @default(autoincrement())
-  name String
-  userId String
-  notes Note[]
+  space_id Int    @id @default(autoincrement())
+  name     String
+  notes    Note[]
+  userId   String // This creates a direct relationship to the User model
+  user     User   @relation(fields: [userId], references: [user_oauth_id])
+
+  @@index([space_id])
 }
 
 model Note {
-  note_id Int  @id @default(autoincrement())
-  title String
-  data String
-  space Space @relation(fields: [note_id], references: [space_id])
+  note_id   Int    @id @default(autoincrement())
+  title     String
+  data      String
+  spaceId   Int
+  space_note Space @relation(fields: [spaceId], references: [space_id])
+
+  @@index([note_id])
+}
+
+model User {
+  user_id     Int    @id @default(autoincrement())
+  user_oauth_id String @unique
+  user_spaces Space[]
 }

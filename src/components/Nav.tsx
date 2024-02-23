@@ -22,7 +22,7 @@ export default function Nav(props:{session:any}) {
 
     const createNewSpace = () => {
         axios.post('/api/create-space', {
-            spaceName: 'Fred',
+            spaceName: 'test',
             userId: props.session.user.id
           })
           .then(function (response) {
@@ -34,9 +34,8 @@ export default function Nav(props:{session:any}) {
     }
 
     const getSpaces = () => {
-        axios.get('/api/get-spaces')
+        axios.get(`/api/get-spaces?id=${props.session.user.id}`)
         .then((resp) => {
-            console.log(resp.data)
             setSpaces(resp.data)
         })
     }
@@ -93,7 +92,7 @@ export default function Nav(props:{session:any}) {
                         </div>
                         <h2 className="text-3xl font-bold text-white">Spaces</h2>
                         <ul>
-                            {spaces?.map((space:any, index)=>{
+                            {(spaces.length > 0) && spaces?.map((space:any, index)=>{
                                 return(
                                     <li key={index} className="text-xl text-white">
                                         <Link href={`/${space.space_id}`}>
@@ -112,7 +111,7 @@ export default function Nav(props:{session:any}) {
                                     JavaScript
                                 </Link>
                             </li> */}
-                            {/* <button className="my-5" onClick={createNewSpace}> Create Space +</button> */}
+                            <button className="my-5" onClick={createNewSpace}> Create Space +</button>
                         </ul>
                     </div>
                     <button

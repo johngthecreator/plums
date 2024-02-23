@@ -13,7 +13,7 @@ import { options } from "../api/auth/[...nextauth]/options";
 
 export default async function PlatformLayout(props:{children: ReactNode}){
     const session = await getServerSession(options);
-    console.log(session);
+    // console.log(session?.user.id);
     // const params = useParams<{ space: string; }>()
     // const { data: session, status } = useSession()
     // const [spaces, setSpaces] = useState([]);
