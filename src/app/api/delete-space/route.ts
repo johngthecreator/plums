@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
+// change these to url parameters
 export async function deleteSpaceById(spaceId: number) {
     try {
       const deletedSpace = await prisma.space.delete({

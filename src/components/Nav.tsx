@@ -6,11 +6,17 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"
 
+import { Skeleton } from "@/components/ui/skeleton"
+
+
 import { useEffect, useState } from "react";
 import { CgMenuGridO } from "react-icons/cg";
 import { SessionProvider, signOut } from "next-auth/react";
 import Link from "next/link";
 import axios from "axios";
+import { Dialog } from "./ui/dialog";
+import Popup from "./Popup";
+import { CreateSpaceInput } from "./CreateSpaceInput";
 
 
 export default function Nav(props:{session:any}) {
@@ -51,30 +57,29 @@ export default function Nav(props:{session:any}) {
                         {/* <h2 className="font-bold text-2xl text-white">{props.title}</h2> */}
                     </div>
                     <SheetContent side={"left"} className="flex flex-col p-5 bg-gradient-to-b from-[#6E43B1] to-[#E9DBFF]">
-                        <div className="flex flex-col justify-between bg-gradient-to-b from-[#6E43B1] to-[#E9DBFF] w-full h-full p-5">
+                        <div className="flex flex-col justify-between w-full h-full">
                             <div className="flex flex-col gap-3">
                                 <div className="flex gap-5 mb-3 items-center font-semibold text-xl text-white">
                                     <img src={`${props.session.user.image}`} className="h-[50px] w-[50px] rounded-[50px] bg-[#E9DBFF]"/>
                                     <h2>{props.session.user.name}</h2>
                                 </div>
                                 <h2 className="text-3xl font-bold text-white">Spaces</h2>
-                                <ul>
-                                    <li className="text-xl text-white">
-                                        <Link href={"/"}>
-                                            JavaScript
-                                        </Link>
-                                    </li>
-                                    <li className="text-xl text-white">
-                                        <Link href={"/"}>
-                                            Cooking
-                                        </Link>
-                                    </li>
-                                    <li className="text-xl text-white">
-                                        <Link href={"/"}>
-                                            JavaScript
-                                        </Link>
-                                    </li>
-                                </ul>
+                                {(spaces.length > 0) ? (spaces?.map((space:any, index)=>{
+                                    return(
+                                        <li key={index} className="flex justify-between text-xl text-white">
+                                            <Link href={`/${space.space_id}`}>
+                                                {space.name}
+                                            </Link>
+                                            <Popup />
+                                        </li>
+                                    )
+                                })):(
+                                    <div className="space-y-2">
+                                        <Skeleton className="h-4 w-5/6" />
+                                        <Skeleton className="h-4 w-3/4" />
+                                    </div>
+                                )}
+                                <CreateSpaceInput user={props.session.user.id} />
                             </div>
                             <button
                                 className="w-full py-3 text-white font-bold bg-[#B281F6] rounded-[10px]"
@@ -92,26 +97,22 @@ export default function Nav(props:{session:any}) {
                         </div>
                         <h2 className="text-3xl font-bold text-white">Spaces</h2>
                         <ul>
-                            {(spaces.length > 0) && spaces?.map((space:any, index)=>{
+                            {(spaces.length > 0) ? (spaces?.map((space:any, index)=>{
                                 return(
-                                    <li key={index} className="text-xl text-white">
+                                    <li key={index} className="flex justify-between text-xl text-white">
                                         <Link href={`/${space.space_id}`}>
                                             {space.name}
                                         </Link>
+                                        <Popup />
                                     </li>
                                 )
-                            })}
-                            {/* <li className="text-xl text-white">
-                                <Link href={"/"}>
-                                    Cooking
-                                </Link>
-                            </li>
-                            <li className="text-xl text-white">
-                                <Link href={"/"}>
-                                    JavaScript
-                                </Link>
-                            </li> */}
-                            <button className="my-5" onClick={createNewSpace}> Create Space +</button>
+                            })):(
+                                <div className="space-y-2">
+                                    <Skeleton className="h-4 w-5/6" />
+                                    <Skeleton className="h-4 w-3/4" />
+                                </div>
+                            )}
+                            <CreateSpaceInput user={props.session.user.id} />
                         </ul>
                     </div>
                     <button
