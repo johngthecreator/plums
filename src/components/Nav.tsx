@@ -14,30 +14,19 @@ import { CgMenuGridO } from "react-icons/cg";
 import { SessionProvider, signOut } from "next-auth/react";
 import Link from "next/link";
 import axios from "axios";
-import { Dialog } from "./ui/dialog";
 import Popup from "./Popup";
 import { CreateSpaceInput } from "./CreateSpaceInput";
 
 
 export default function Nav(props:{session:any}) {
     const [spaces, setSpaces] = useState([]);
+    const [toRender, setToRerender] = useState<boolean>(false);
 
     useEffect(()=>{
         getSpaces();
-    },[])
+        setToRerender(false);
+    },[toRender])
 
-    const createNewSpace = () => {
-        axios.post('/api/create-space', {
-            spaceName: 'test',
-            userId: props.session.user.id
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-    }
 
     const getSpaces = () => {
         axios.get(`/api/get-spaces?id=${props.session.user.id}`)
@@ -67,10 +56,10 @@ export default function Nav(props:{session:any}) {
                                 {(spaces.length > 0) ? (spaces?.map((space:any, index)=>{
                                     return(
                                         <li key={index} className="flex justify-between text-xl text-white">
-                                            <Link href={`/${space.space_id}`}>
+                                            <Link href={`/home/${space.space_id}`}>
                                                 {space.name}
                                             </Link>
-                                            <Popup />
+                                            <Popup spaceId={space.space_id} spaceName={space.name} toRender={()=>setToRerender(true)}/>
                                         </li>
                                     )
                                 })):(
@@ -79,7 +68,7 @@ export default function Nav(props:{session:any}) {
                                         <Skeleton className="h-4 w-3/4" />
                                     </div>
                                 )}
-                                <CreateSpaceInput user={props.session.user.id} />
+                                <CreateSpaceInput user={props.session.user.id} toRender={()=>setToRerender(true)} />
                             </div>
                             <button
                                 className="w-full py-3 text-white font-bold bg-[#B281F6] rounded-[10px]"
@@ -100,10 +89,10 @@ export default function Nav(props:{session:any}) {
                             {(spaces.length > 0) ? (spaces?.map((space:any, index)=>{
                                 return(
                                     <li key={index} className="flex justify-between text-xl text-white">
-                                        <Link href={`/${space.space_id}`}>
+                                        <Link href={`/home/${space.space_id}`}>
                                             {space.name}
                                         </Link>
-                                        <Popup />
+                                        <Popup spaceId={space.space_id} spaceName={space.name} toRender={()=>setToRerender(true)}/>
                                     </li>
                                 )
                             })):(
@@ -112,7 +101,7 @@ export default function Nav(props:{session:any}) {
                                     <Skeleton className="h-4 w-3/4" />
                                 </div>
                             )}
-                            <CreateSpaceInput user={props.session.user.id} />
+                            <CreateSpaceInput user={props.session.user.id} toRender={()=>setToRerender(true)} />
                         </ul>
                     </div>
                     <button

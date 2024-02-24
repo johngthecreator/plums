@@ -9,7 +9,7 @@ import {
   import axios from "axios";
 import { useState } from "react";
    
-  export function CreateSpaceInput(props:{user: string}) {
+  export function CreateSpaceInput(props:{user: string, toRender:()=>void}) {
     const [name, setName] = useState<string>("");
 
     const createNewSpace = () => {
@@ -19,7 +19,7 @@ import { useState } from "react";
             userId: props.user
           })
           .then(function (response) {
-            console.log(response);
+            props.toRender();
           })
           .catch(function (error) {
             console.log(error);

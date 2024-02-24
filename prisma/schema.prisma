@@ -19,14 +19,20 @@ model Space {
 }
 
 model Note {
-  note_id   Int    @id @default(autoincrement())
-  title     String
-  data      String
-  spaceId   Int
-  space_note Space @relation(fields: [spaceId], references: [space_id])
+  note_id    Int      @id @default(autoincrement())
+  title      String
+  data       String
+  spaceId    Int
+  space_note Space    @relation(fields: [spaceId], references: [space_id])
+  parentId   Int?     @map("parent_id")
+  parent     Note?    @relation("NoteHierarchy", fields: [parentId], references: [note_id], onDelete: NoAction, onUpdate: NoAction)
+  children   Note[]   @relation("NoteHierarchy")
 
   @@index([note_id])
 }
+
+
+
 
 model User {
   user_id     Int    @id @default(autoincrement())
