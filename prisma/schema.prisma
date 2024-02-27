@@ -8,11 +8,18 @@ datasource db {
   relationMode = "prisma"
 }
 
+model User {
+  user_id     Int    @id @default(autoincrement())
+  user_oauth_id String @unique
+  user_spaces Space[]
+}
+
+
 model Space {
   space_id Int    @id @default(autoincrement())
   name     String
   notes    Note[]
-  userId   String // This creates a direct relationship to the User model
+  userId   String
   user     User   @relation(fields: [userId], references: [user_oauth_id])
 
   @@index([space_id])
@@ -22,7 +29,7 @@ model Note {
   note_id    Int      @id @default(autoincrement())
   title      String
   text       String
-  links      String[]
+  links      Link[]
   spaceId    Int
   space_note Space    @relation(fields: [spaceId], references: [space_id])
   parentId   Int?     @map("parent_id")
@@ -32,11 +39,16 @@ model Note {
   @@index([note_id])
 }
 
+model Link {
+  link_id    Int      @id @default(autoincrement())
+  link_title String
+  link_value String
+  link_desc String
+  noteConn Int
+  note Note @relation(fields: [noteConn], references: [note_id])
 
-
-
-model User {
-  user_id     Int    @id @default(autoincrement())
-  user_oauth_id String @unique
-  user_spaces Space[]
 }
+
+
+
+
