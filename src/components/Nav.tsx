@@ -43,7 +43,7 @@ export default function Nav(props:{session:any}) {
                         <SheetTrigger className="md:hidden">
                             <CgMenuGridO className="text-white text-5xl" />
                         </SheetTrigger>
-                        {/* <h2 className="font-bold text-2xl text-white">{props.title}</h2> */}
+                        <h2 className="font-bold text-2xl text-white">plums</h2>
                     </div>
                     <SheetContent side={"left"} className="flex flex-col p-5 bg-gradient-to-b from-[#6E43B1] to-[#E9DBFF]">
                         <div className="flex flex-col justify-between w-full h-full">
