@@ -7,12 +7,9 @@
     try {
       const newNote = await prisma.note.create({
         data: {
-          spaceId: body.spaceId,  
+          topicId: body.spaceId,  
           title: body.title,
           text: body.text,
-          links: {
-            create: body.links,
-          },
         },
       });
       return Response.json(newNote);

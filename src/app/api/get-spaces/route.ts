@@ -1,13 +1,21 @@
 import { PrismaClient } from '@prisma/client'
+import { PrismaLibSQL } from '@prisma/adapter-libsql'
+import { createClient } from '@libsql/client'
 
-const prisma = new PrismaClient()
+const libsql = createClient({
+  url: `${process.env.TURSO_DATABASE_URL}`,
+  authToken: `${process.env.TURSO_AUTH_TOKEN}`,
+})
+
+const adapter = new PrismaLibSQL(libsql)
+const prisma = new PrismaClient({ adapter })
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
   const id = searchParams.get('id');
   if (!id) return;
   try {
-    const allSpaces = await prisma.space.findMany({
+    const allSpaces = await prisma.topic.findMany({
       where: {
         userId: {
           equals: id,

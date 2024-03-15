@@ -1,52 +1,54 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
-  relationMode = "prisma"
-}
-
-model User {
-  user_id     Int    @id @default(autoincrement())
-  user_oauth_id String @unique
-  user_spaces Space[]
+  provider = "sqlite"
+  url      = "file:./dev.db"
+  relationMode = "foreignKeys"
 }
 
 
-model Space {
-  space_id Int    @id @default(autoincrement())
+
+model Topic {
+  topic_id Int    @id @default(autoincrement())
   name     String
   notes    Note[]
+  images    Image[]
+  urls    Link[]
   userId   String
-  user     User   @relation(fields: [userId], references: [user_oauth_id])
 
-  @@index([space_id])
+  @@index([topic_id])
 }
 
 model Note {
   note_id    Int      @id @default(autoincrement())
   title      String
   text       String
-  links      Link[]
-  spaceId    Int
-  space_note Space    @relation(fields: [spaceId], references: [space_id])
-  parentId   Int?     @map("parent_id")
-  parent     Note?    @relation("NoteHierarchy", fields: [parentId], references: [note_id], onDelete: NoAction, onUpdate: NoAction)
-  children   Note[]   @relation("NoteHierarchy")
-
+  topicId    Int
+  topic_note Topic    @relation(fields: [topicId], references: [topic_id])
   @@index([note_id])
+}
+
+model Image {
+  image_id    Int      @id @default(autoincrement())
+  title      String
+  imageData      String
+  description String
+  topicId    Int
+  topic_note Topic    @relation(fields: [topicId], references: [topic_id])
+  @@index([image_id])
 }
 
 model Link {
   link_id    Int      @id @default(autoincrement())
-  link_title String
-  link_value String
-  link_desc String
-  noteConn Int
-  note Note @relation(fields: [noteConn], references: [note_id])
-
+  title String
+  url String
+  description String
+  topicId    Int
+  topic_note Topic    @relation(fields: [topicId], references: [topic_id])
+  @@index([link_id])
 }
 
 

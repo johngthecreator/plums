@@ -31,6 +31,7 @@ export default function Nav(props:{session:any}) {
     const getSpaces = () => {
         axios.get(`/api/get-spaces?id=${props.session.user.id}`)
         .then((resp) => {
+            console.log(resp);
             setSpaces(resp.data)
         })
     }
@@ -56,10 +57,10 @@ export default function Nav(props:{session:any}) {
                                 {(spaces.length > 0) ? (spaces?.map((space:any, index)=>{
                                     return(
                                         <li key={index} className="flex justify-between text-xl text-white">
-                                            <Link href={`/home/${space.space_id}`}>
+                                            <Link href={`/home/${space.topic_id}`}>
                                                 {space.name}
                                             </Link>
-                                            <Popup spaceId={space.space_id} spaceName={space.name} toRender={()=>setToRerender(true)}/>
+                                            <Popup spaceId={space.topic_id} spaceName={space.name} toRender={()=>setToRerender(true)}/>
                                         </li>
                                     )
                                 })):(
@@ -89,10 +90,10 @@ export default function Nav(props:{session:any}) {
                             {(spaces.length > 0) ? (spaces?.map((space:any, index)=>{
                                 return(
                                     <li key={index} className="flex justify-between text-xl text-white">
-                                        <Link href={`/home/${space.space_id}`}>
+                                        <Link href={`/home/${space.topic_id}`}>
                                             {space.name}
                                         </Link>
-                                        <Popup spaceId={space.space_id} spaceName={space.name} toRender={()=>setToRerender(true)}/>
+                                        <Popup spaceId={space.topic_id} spaceName={space.name} toRender={()=>setToRerender(true)}/>
                                     </li>
                                 )
                             })):(
