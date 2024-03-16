@@ -1,29 +1,21 @@
-"use client"
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-    DialogFooter,
-} from "@/components/ui/dialog"
-
+import { useState } from "react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { SlNote } from "react-icons/sl";
-
 import axios from "axios";
 import { DialogClose } from "@radix-ui/react-dialog";
-import { useState } from "react";
-
-
 
 export default function CreateNoteModal() {
-    const [username, setUsername] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
+    const [topic, setTopic] = useState("");
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [label, setLabel] = useState("");
 
-    const handleSubmit = () => {
-        console.log(username);
-        console.log(password);
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        console.log("Topic:", topic);
+        console.log("Title:", title);
+        console.log("Description:", description);
+        console.log("Label:", label);
     }
 
     return (
@@ -32,21 +24,31 @@ export default function CreateNoteModal() {
                 <SlNote />
             </DialogTrigger>
             <DialogContent>
+                <DialogClose asChild>
+                    <button>Close</button>
+                </DialogClose>
                 <DialogHeader>
-                    <DialogTitle>Are you absolutely sure?</DialogTitle>
+                    <DialogTitle>Create a New Note</DialogTitle>
                     <DialogDescription>
-                        This action cannot be undone. This will permanently delete your account
-                        and remove your data from our servers.
+                        Please provide the details for your new note.
                     </DialogDescription>
                 </DialogHeader>
                 <form className="flex flex-col" onSubmit={handleSubmit}>
                     <label>
-                        Username:
-                        <input type="text" value={username} onChange={e=>setUsername(e.target.value)} />
+                        Topic:
+                        <input type="text" value={topic} onChange={e => setTopic(e.target.value)} />
                     </label>
                     <label>
-                        Password:
-                        <input type="text" value={password} onChange={e=>setPassword(e.target.value)} />
+                        Title:
+                        <input type="text" value={title} onChange={e => setTitle(e.target.value)} />
+                    </label>
+                    <label>
+                        Description:
+                        <textarea value={description} onChange={e => setDescription(e.target.value)} />
+                    </label>
+                    <label>
+                        Optional Label:
+                        <input type="text" value={label} onChange={e => setLabel(e.target.value)} />
                     </label>
                     <button type="submit">Create Note</button>
                 </form>
