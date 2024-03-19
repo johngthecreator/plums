@@ -1,12 +1,14 @@
+"use client";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { SlPaperClip } from "react-icons/sl";
 import axios from "axios";
 import { DialogClose } from "@radix-ui/react-dialog";
 
-export default function CreateNoteModal() {
+export default function UploadFileModal() {
     const [file, setFile] = useState<File | null>(null);
-    const [label, setLabel] = useState("");
+    const [dataString, setDataString] = useState<string>("");
+    const [title, setTitle] = useState<string>("");
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = e.target.files && e.target.files[0];
@@ -22,12 +24,11 @@ export default function CreateNoteModal() {
             reader.onloadend = () => {
                 if (reader.result) {
                     const base64Data = reader.result.toString().split(",")[1];
-                    console.log("Base64 Encoded File:", base64Data);
+                    setDataString(base64Data);
                 }
             };
             reader.readAsDataURL(file);
         }
-        console.log("Label:", label);
     };
 
     return (
@@ -37,21 +38,14 @@ export default function CreateNoteModal() {
             </DialogTrigger>
             <DialogContent>
                 <DialogClose asChild>
-                    <button>Close</button>
                 </DialogClose>
                 <DialogHeader>
                     <DialogTitle>Attach a File</DialogTitle>
                 </DialogHeader>
-                <form className="flex flex-col" onSubmit={handleSubmit}>
-                    <label>
-                        Attach File:
-                        <input type="file" onChange={handleFileChange} />
-                    </label>
-                    <label>
-                        Label:
-                        <input type="text" value={label} onChange={e => setLabel(e.target.value)} />
-                    </label>
-                    <button type="submit">Upload</button>
+                <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+                    <input type="text" className=" border-black border-b border-solid focus:outline-none" placeholder="File Title" value={title} onChange={e => setTitle(e.target.value)} />
+                    <input type="file" className="p-3 border-black border-solid border-[1px]" onChange={handleFileChange} />
+                    <button type="submit" className="bg-purple-300 text-black font-bold p-2">Upload File</button>
                 </form>
             </DialogContent>
         </Dialog>

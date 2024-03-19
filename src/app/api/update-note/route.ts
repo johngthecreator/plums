@@ -14,12 +14,14 @@ import { createClient } from '@libsql/client'
   export async function POST(req: Request) {
     const body = await req.json();
     try {
-      const newNote = await prisma.note.create({
-        data: {
-          topicId: Number(body.topicId),  
-          title: body.title,
-          text: body.text,
-        },
+      const newNote = await prisma.note.update({
+        where: {
+            note_id: Number(body.noteId),  // Use note_id from the request to find the note
+          },
+          data: {
+            title: body.title,
+            text: body.text,
+          },
       });
       return Response.json(newNote);
     } catch (error) {

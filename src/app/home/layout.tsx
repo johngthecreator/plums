@@ -15,7 +15,6 @@ export default async function PlatformLayout(props:{children: ReactNode}){
     const session = await getServerSession(options);
     return(
         <div className="h-screen w-full flex flex-col md:grid md:grid-cols-5 bg-white">
-            
             <Nav session={session}  />
             <div className="h-full md:col-span-4">
                 {props.children}
