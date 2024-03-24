@@ -35,7 +35,6 @@ model Image {
   image_id    Int      @id @default(autoincrement())
   title      String
   imageData      String
-  description String
   topicId    Int
   topic_note Topic    @relation(fields: [topicId], references: [topic_id])
   @@index([image_id])
