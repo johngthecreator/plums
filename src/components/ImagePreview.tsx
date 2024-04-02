@@ -6,26 +6,26 @@ import { SlLink } from "react-icons/sl";
 import axios from "axios";
 import { DialogClose, DialogDescription } from "@radix-ui/react-dialog";
 
-export default function NotePreview(props:{title:string, text:string, noteId:number, passedFunc: ()=>void}) {
-  const [text, setText] = useState<string>(`${props.text}`)
+export default function ImagePreview(props:{title:string, imageURL:string, imageId:number, passedFunc: ()=>void}) {
+  const [imageURL, setImageURL] = useState<string>(`${props.imageURL}`)
   const [title, setTitle] = useState<string>(`${props.title}`);
 
-  const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
-      if (title.length <= 0 || text.length <= 0) {
-          alert("Oh no! Something went wrong. Please try again ");
-      }else{
-          axios.post('/api/update-note', {
-              noteId: props.noteId,
-              title: title,
-              text: text 
-          })
-          .then(resp=>console.log(resp))
-      }
-  }
+//   const handleSubmit = (e: React.FormEvent) => {
+//       e.preventDefault();
+//       if (title.length <= 0 || imageURL.length <= 0) {
+//           alert("Oh no! Something went wrong. Please try again ");
+//       }else{
+//           axios.post('/api/update-note', {
+//               noteId: props.noteId,
+//               title: title,
+//               text: text 
+//           })
+//           .then(resp=>console.log(resp))
+//       }
+//   }
 
   const deleteNote = () => {
-    axios.delete(`/api/delete-note?id=${props.noteId}`)
+    axios.delete(`/api/delete-note?id=${props.imageId}`)
     .then(resp=>console.log(resp));
     props.passedFunc();
   }
@@ -35,16 +35,14 @@ export default function NotePreview(props:{title:string, text:string, noteId:num
             <DialogTrigger className="w-full">
               <div className="w-full flex flex-col gap-2 p-3 bg-purple-500 rounded-xl mb-3 break-inside">
                 <h2 className="font-bold text-2xl text-white">{props.title}</h2>
-                <p className="line-clamp-2">{props.text}</p>
-
               </div>
             </DialogTrigger>
             <DialogContent>
                 <DialogClose asChild>
                 </DialogClose>
-                <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+                <form className="flex flex-col gap-2">
                     <input type="text" className=" border-black border-b border-solid focus:outline-none" placeholder="Title" value={title} onChange={e => setTitle(e.target.value)} />
-                    <textarea className="border-black border h-[300px] resize-none focus:outline-none p-2" placeholder="what's on your mind?" value={text} onChange={e => setText(e.target.value)} />
+                    <Image src={imageURL} fill={true} alt={title} />
                     <DialogClose asChild>
                         <button type="submit" className="bg-purple-300 text-black font-bold p-2">Update Note</button>
                     </DialogClose>

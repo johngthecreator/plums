@@ -7,7 +7,7 @@ import axios from "axios";
 import { DialogClose, DialogDescription } from "@radix-ui/react-dialog";
 import Link from "next/link";
 
-export default function LinkPreview(props:{title:string, link:string, linkId:number, description:string}) {
+export default function LinkPreview(props:{title:string, link:string, linkId:number, description:string, passedFunc:()=>void}) {
   const [link, setLink] = useState<string>(`${props.link}`)
   const [description, setDescription] = useState<string>(`${props.description}`)
   const [title, setTitle] = useState<string>(`${props.title}`);
@@ -30,13 +30,14 @@ export default function LinkPreview(props:{title:string, link:string, linkId:num
   const deleteLink = () => {
     axios.delete(`/api/delete-link?id=${props.linkId}`)
     .then(resp=>console.log(resp));
+    props.passedFunc();
   }
 
   console.log(link)
 
   return (
         <Dialog>
-            <DialogTrigger>
+            <DialogTrigger className="w-full">
               <div className="w-full flex flex-col gap-2 p-3 bg-purple-500 rounded-xl mb-3 break-inside">
                 <h2 className="font-bold text-2xl text-white">{props.title}</h2>
                 <p className="line-clamp-2">{props.description}</p>

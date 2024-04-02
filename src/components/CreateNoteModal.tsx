@@ -5,7 +5,7 @@ import { SlNote } from "react-icons/sl";
 import axios from "axios";
 import { DialogClose } from "@radix-ui/react-dialog";
 
-export default function CreateNoteModal(props:{topicId:number}) {
+export default function CreateNoteModal(props:{topicId:number, passedFunc:()=>void}) {
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
 
@@ -41,7 +41,7 @@ export default function CreateNoteModal(props:{topicId:number}) {
                     <input type="text" className=" border-black border-b border-solid focus:outline-none" placeholder="Title" value={title} onChange={e => setTitle(e.target.value)} />
                     <textarea className="border-black border h-[300px] resize-none focus:outline-none p-2" placeholder="what's on your mind?" value={text} onChange={e => setText(e.target.value)} />
                     <DialogClose asChild>
-                        <button type="submit" className="bg-purple-300 text-black font-bold p-2">Create Note</button>
+                        <button onClick={props.passedFunc} type="submit" className="bg-purple-300 text-black font-bold p-2">Create Note</button>
                     </DialogClose>
                 </form>
             </DialogContent>

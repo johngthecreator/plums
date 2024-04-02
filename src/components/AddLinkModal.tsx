@@ -5,7 +5,7 @@ import { SlLink } from "react-icons/sl";
 import axios from "axios";
 import { DialogClose } from "@radix-ui/react-dialog";
 
-export default function AddLinkModal(props:{topicId:number}) {
+export default function AddLinkModal(props:{topicId:number, passedFunc:()=>void}) {
     const [link, setLink] = useState<string>("");
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
@@ -42,7 +42,7 @@ export default function AddLinkModal(props:{topicId:number}) {
                     <input type="text" className=" border-black border-b border-solid focus:outline-none" placeholder="Link URL" value={link} onChange={e => setLink(e.target.value)} />
                     <input type="text" className=" border-black border-b border-solid focus:outline-none" placeholder="Link Description" value={description} onChange={e => setDescription(e.target.value)} />
                     <DialogClose asChild>
-                    <button type="submit" className="bg-purple-300 text-black font-bold p-2">Add Link</button>
+                    <button onClick={props.passedFunc} type="submit" className="bg-purple-300 text-black font-bold p-2">Add Link</button>
                     </DialogClose>
                 </form>
             </DialogContent>
