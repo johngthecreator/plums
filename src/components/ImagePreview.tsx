@@ -10,22 +10,26 @@ export default function ImagePreview(props:{title:string, imageURL:string, image
   const [imageURL, setImageURL] = useState<string>(`${props.imageURL}`)
   const [title, setTitle] = useState<string>(`${props.title}`);
 
-//   const handleSubmit = (e: React.FormEvent) => {
-//       e.preventDefault();
-//       if (title.length <= 0 || imageURL.length <= 0) {
-//           alert("Oh no! Something went wrong. Please try again ");
-//       }else{
-//           axios.post('/api/update-note', {
-//               noteId: props.noteId,
-//               title: title,
-//               text: text 
-//           })
-//           .then(resp=>console.log(resp))
-//       }
-//   }
+  const updateImage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (title.length === 0 || imageURL.length === 0) {
+        alert("Oh no! Something went wrong. Please try again.");
+    } else {
+        try {
+            const response = await axios.post('/api/update-image', {
+                imageId: props.imageId,
+                title: title,
+            });
+            console.log(response);
+            props.passedFunc();
+        } catch (error) {
+            console.error("Request error", error);
+        }
+    }
+};
 
-  const deleteNote = () => {
-    axios.delete(`/api/delete-note?id=${props.imageId}`)
+  const deleteImage = () => {
+    axios.delete(`/api/delete-image?id=${props.imageId}`)
     .then(resp=>console.log(resp));
     props.passedFunc();
   }
@@ -40,14 +44,16 @@ export default function ImagePreview(props:{title:string, imageURL:string, image
             <DialogContent>
                 <DialogClose asChild>
                 </DialogClose>
-                <form className="flex flex-col gap-2">
+                <form className="flex flex-col gap-2" onSubmit={updateImage}>
                     <input type="text" className=" border-black border-b border-solid focus:outline-none" placeholder="Title" value={title} onChange={e => setTitle(e.target.value)} />
-                    <Image src={imageURL} fill={true} alt={title} />
+                    <div className="relative w-full h-[300px]">
+                      <Image src={imageURL} fill={true} alt={title} layout="fill" objectFit="contain" />
+                    </div>
                     <DialogClose asChild>
-                        <button type="submit" className="bg-purple-300 text-black font-bold p-2">Update Note</button>
+                        <button type="submit" className="bg-purple-300 text-black font-bold p-2">Update Image</button>
                     </DialogClose>
                     <DialogClose asChild>
-                        <button onClick={deleteNote} className="bg-red-300 text-black font-bold p-2">Delete</button>
+                        <button onClick={deleteImage} className="bg-red-300 text-black font-bold p-2">Delete</button>
                     </DialogClose>
                 </form>
             </DialogContent>
