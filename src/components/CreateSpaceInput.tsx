@@ -31,7 +31,7 @@ import { useState } from "react";
     return (
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1">
-          <AccordionTrigger className="text-white">Create Space +</AccordionTrigger>
+          <AccordionTrigger className="text-white">Create Topic +</AccordionTrigger>
           <AccordionContent className="grid grid-cols-4">
             <input onChange={(e)=>setName(e.target.value)} type="text" className="col-span-3 rounded-lg p-2 border-solid border-2 border-white bg-transparent mr-2 text-white focus:outline-none"/>
             <AccordionTrigger onClick={createNewSpace} className="col-span-1 p-2 bg-white text-black rounded-lg text-center font-bold">add.</AccordionTrigger>

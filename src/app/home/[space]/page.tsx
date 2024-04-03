@@ -20,10 +20,10 @@ import ImagePreview from "@/components/ImagePreview";
 export default function Page({ params }: { params: { space: number } }){
 
     const [toRender, setToRerender] = useState<boolean>(false);
-    const [spaceData, setSpaceData] = useState<any>();
-    const [notesData, setNotesData] = useState<any>();
-    const [linksData, setLinksData] = useState<any>();
-    const [imagesData, setImagesData] = useState<any>();
+    const [spaceData, setSpaceData] = useState<any>(null);
+    const [notesData, setNotesData] = useState<any>(null);
+    const [linksData, setLinksData] = useState<any>(null);
+    const [imagesData, setImagesData] = useState<any>(null);
 
     useEffect(()=>{
         setToRerender(false);

@@ -65,9 +65,11 @@ export default function Nav(props:{session:any}) {
                                         </li>
                                     )
                                 })):(
-                                    <div className="space-y-2">
-                                        <Skeleton className="h-4 w-5/6" />
-                                        <Skeleton className="h-4 w-3/4" />
+                                    <div>
+                                        {/* <Skeleton className="h-4 w-5/6" />
+                                        <Skeleton className="h-4 w-3/4" /> */}
+                                        <h2>Looks like you don&#39;t </h2>
+                                        <h2>have any topics yet...</h2>
                                     </div>
                                 )}
                                 <CreateSpaceInput user={props.session.user.id} toRender={()=>setToRerender(true)} />
@@ -86,7 +88,7 @@ export default function Nav(props:{session:any}) {
                             <img src={`${props.session.user.image}`} className="h-[50px] w-[50px] rounded-[50px] bg-[#E9DBFF]"/>
                             <h2>{props.session.user.name}</h2>
                         </div>
-                        <h2 className="text-3xl font-bold text-white">Spaces</h2>
+                        <h2 className="text-3xl font-bold text-white">Topics</h2>
                         <ul>
                             {(spaces.length > 0) ? (spaces?.map((space:any, index)=>{
                                 return(
@@ -98,9 +100,11 @@ export default function Nav(props:{session:any}) {
                                     </li>
                                 )
                             })):(
-                                <div className="space-y-2">
-                                    <Skeleton className="h-4 w-5/6" />
-                                    <Skeleton className="h-4 w-3/4" />
+                                <div>
+                                    {/* <Skeleton className="h-4 w-5/6" />
+                                    <Skeleton className="h-4 w-3/4" /> */}
+                                    <h2>Looks like you don&#39;t </h2>
+                                    <h2>have any topics yet...</h2>
                                 </div>
                             )}
                             <CreateSpaceInput user={props.session.user.id} toRender={()=>setToRerender(true)} />
