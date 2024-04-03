@@ -44,13 +44,13 @@ export default function Page({ params }: { params: { space: number } }){
     }
 
     const getLinks = () => {
-        axios.get(`http://localhost:3000/api/get-links?id=${params.space}`)
+        axios.get(`/api/get-links?id=${params.space}`)
         .then(resp=>setLinksData(resp.data));
     }
 
 
     const getSpaceData = () => {
-        axios.get(`http://localhost:3000/api/get-space?id=${params.space}`)
+        axios.get(`/api/get-space?id=${params.space}`)
         .then(resp => setSpaceData(resp.data));
     }
 
