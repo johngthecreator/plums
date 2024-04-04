@@ -2,10 +2,7 @@
 
 import Nav from "@/components/Nav";
 import { ReactNode } from "react";
-import { useParams } from 'next/navigation'
 import { getServerSession } from "next-auth";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { options } from "../api/auth/[...nextauth]/options";
 
 

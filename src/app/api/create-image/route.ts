@@ -24,6 +24,6 @@ import { createClient } from '@libsql/client'
       return Response.json(newNote);
     } catch (error) {
       console.error('Request error', error);
-      return Response.json({ error: 'Error creating link', success: false });
+      return Response.json({ error: 'Error creating image', success: false });
     }
   } 

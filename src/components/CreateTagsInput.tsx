@@ -9,7 +9,7 @@ import {
   import axios from "axios";
 import { useState } from "react";
    
-  export function CreateSpaceInput(props:{user: string, toRender:()=>void}) {
+  export function CreateTagsInput(props:{user: string, toRender:()=>void}) {
     const [name, setName] = useState<string>("");
 
     const createNewSpace = () => {
@@ -32,7 +32,7 @@ import { useState } from "react";
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1">
           <AccordionTrigger className=" flex justify-between text-white">
-            <h2 className="text-3xl font-bold text-white">Topics</h2>
+            <h2 className="text-3xl font-bold text-white">Tags</h2>
             <p className="text-3xl"> + </p>
           </AccordionTrigger>
           <AccordionContent className="grid grid-cols-4">
