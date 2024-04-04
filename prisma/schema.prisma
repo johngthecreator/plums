@@ -10,17 +10,33 @@ datasource db {
 }
 
 
+// model Topic {
+//   topic_id  Int     @id @default(autoincrement())
+//   name      String
+//   notes     Note[]
+//   images    Image[]
+//   urls      Link[]
+//   userId    String
+//   tags      Tag[]   @relation("TopicTags")
+
+//   @@index([topic_id])
+// }
 
 model Topic {
-  topic_id Int    @id @default(autoincrement())
-  name     String
-  notes    Note[]
-  images    Image[]
-  urls    Link[]
-  userId   String
+  topic_id     Int      @id @default(autoincrement())
+  name         String
+  notes        Note[]
+  images       Image[]
+  urls         Link[]
+  userId       String
+  tags         Tag[]    @relation("TopicTags")
+  parentId     Int?     @map("parentTopicId") // This field points to the parent Topic ID
+  children     Topic[]  @relation("TopicHierarchy") // This relation handles multiple child topics
+  parentTopic  Topic?   @relation("TopicHierarchy", fields: [parentId], references: [topic_id])
 
   @@index([topic_id])
 }
+
 
 model Note {
   note_id    Int      @id @default(autoincrement())
@@ -50,6 +66,11 @@ model Link {
   @@index([link_id])
 }
 
+model Tag {
+  tag_id  Int     @id @default(autoincrement())
+  name    String  @unique
+  topics  Topic[] @relation("TopicTags")
+}
 
 
 
