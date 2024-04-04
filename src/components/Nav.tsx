@@ -59,9 +59,11 @@ export default function Nav(props:{session:any}) {
                                     {(spaces.length > 0) ? (spaces?.map((space:any, index)=>{
                                         return(
                                             <li key={index} className="flex justify-between text-xl text-white">
-                                                <Link href={`/home/${space.topic_id}`}>
-                                                    {space.name}
-                                                </Link>
+                                                <SheetTrigger asChild>
+                                                    <Link href={`/home/${space.topic_id}`}>
+                                                        {space.name}
+                                                    </Link>
+                                                </SheetTrigger>
                                                 <Popup spaceId={space.topic_id} spaceName={space.name} toRender={()=>setToRerender(true)}/>
                                             </li>
                                         )
@@ -81,9 +83,11 @@ export default function Nav(props:{session:any}) {
                                     {(spaces.length > 0) ? (spaces?.map((space:any, index)=>{
                                         return(
                                             <li key={index} className="flex justify-between text-xl text-white">
-                                                <Link href={`/home/${space.topic_id}`}>
-                                                    {space.name}
-                                                </Link>
+                                                <SheetTrigger asChild>
+                                                    <Link href={`/home/${space.topic_id}`}>
+                                                        {space.name}
+                                                    </Link>
+                                                </SheetTrigger>
                                                 <Popup spaceId={space.topic_id} spaceName={space.name} toRender={()=>setToRerender(true)}/>
                                             </li>
                                         )
