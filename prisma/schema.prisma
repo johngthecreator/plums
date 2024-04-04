@@ -43,7 +43,7 @@ model Note {
   title      String
   text       String
   topicId    Int
-  topic_note Topic    @relation(fields: [topicId], references: [topic_id])
+  topic_note Topic    @relation(fields: [topicId], references: [topic_id], onDelete: Cascade)
   @@index([note_id])
 }
 
@@ -52,7 +52,7 @@ model Image {
   title      String
   imageData      String
   topicId    Int
-  topic_note Topic    @relation(fields: [topicId], references: [topic_id])
+  topic_note Topic    @relation(fields: [topicId], references: [topic_id], onDelete: Cascade)
   @@index([image_id])
 }
 
@@ -62,7 +62,7 @@ model Link {
   url String
   description String
   topicId    Int
-  topic_note Topic    @relation(fields: [topicId], references: [topic_id])
+  topic_note Topic    @relation(fields: [topicId], references: [topic_id], onDelete: Cascade)
   @@index([link_id])
 }
 
