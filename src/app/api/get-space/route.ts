@@ -16,10 +16,13 @@ export async function GET(req:Request) {
   const id = searchParams.get('id');
   if (!id) return;
   try {
-    const space = await prisma.topic.findFirst({
+    const space = await prisma.topic.findUnique({
       where: {
         topic_id: Number(id),
       },
+      include: {
+        tags: true,
+      }
     });
     if (space) {
       return Response.json({ status: 200, body: space });

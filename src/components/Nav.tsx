@@ -16,24 +16,34 @@ import Link from "next/link";
 import axios from "axios";
 import Popup from "./Popup";
 import { CreateSpaceInput } from "./CreateSpaceInput";
-import { CreateTagsInput } from "./CreateTagsInput";
+import { CreateTagInput } from "./CreateTagInput";
+import TagPopup from "./TagPopup";
 
 
-export default function Nav(props:{session:any}) {
+export default function Nav(props: { session: any }) {
     const [spaces, setSpaces] = useState([]);
+    const [tags, setTags] = useState([]);
     const [toRender, setToRerender] = useState<boolean>(false);
 
-    useEffect(()=>{
+    useEffect(() => {
         getSpaces();
+        getTags();
         setToRerender(false);
-    },[toRender])
+    }, [toRender])
 
 
     const getSpaces = () => {
         axios.get(`/api/get-spaces?id=${props.session.user.id}`)
-        .then((resp) => {
-            setSpaces(resp.data)
-        })
+            .then((resp) => {
+                setSpaces(resp.data)
+            })
+    }
+
+    const getTags = () => {
+        axios.get(`/api/get-all-tags?id=${props.session.user.id}`)
+            .then((resp) => {
+                setTags(resp.data)
+            })
     }
 
     return (
@@ -44,33 +54,31 @@ export default function Nav(props:{session:any}) {
                         <CgMenuGridO className="text-white text-5xl" />
                     </SheetTrigger>
                     <h2 className="font-bold text-2xl text-white">plums</h2>
-                    
+
                 </div>
                 <SheetContent side={"left"} className="flex flex-col p-5 bg-gradient-to-b from-[#6E43B1] to-[#E9DBFF]">
                     <div className="flex flex-col justify-between w-full h-full">
                         <div className="flex flex-col gap-3">
                             <div className="flex gap-5 mb-3 items-center font-semibold text-xl text-white">
-                                <img src={`${props.session.user.image}`} className="h-[50px] w-[50px] rounded-[50px] bg-[#E9DBFF]"/>
+                                <img src={`${props.session.user.image}`} className="h-[50px] w-[50px] rounded-[50px] bg-[#E9DBFF]" />
                                 <h2>{props.session.user.name}</h2>
                             </div>
                             <div className="max-h-[75vh] flex flex-col overflow-y-scroll no-scrollbar">
-                                <CreateSpaceInput user={props.session.user.id} toRender={()=>setToRerender(true)} />
+                                <CreateSpaceInput user={props.session.user.id} toRender={() => setToRerender(true)} />
                                 <ul>
-                                    {(spaces.length > 0) ? (spaces?.map((space:any, index)=>{
-                                        return(
+                                    {(spaces.length > 0) ? (spaces?.map((space: any, index) => {
+                                        return (
                                             <li key={index} className="flex justify-between text-xl text-white">
                                                 <SheetTrigger asChild>
                                                     <Link href={`/home/${space.topic_id}`}>
                                                         {space.name}
                                                     </Link>
                                                 </SheetTrigger>
-                                                <Popup spaceId={space.topic_id} spaceName={space.name} toRender={()=>setToRerender(true)}/>
+                                                <Popup spaceId={space.topic_id} spaceName={space.name} toRender={() => setToRerender(true)} />
                                             </li>
                                         )
-                                    })):(
+                                    })) : (
                                         <div>
-                                            {/* <Skeleton className="h-4 w-5/6" />
-                                            <Skeleton className="h-4 w-3/4" /> */}
                                             <h2>Looks like you don&#39;t </h2>
                                             <h2>have any topics yet...</h2>
                                         </div>
@@ -78,35 +86,33 @@ export default function Nav(props:{session:any}) {
                                 </ul>
 
 
-                                <CreateSpaceInput user={props.session.user.id} toRender={()=>setToRerender(true)} />
+                                <CreateTagInput user={props.session.user.id} toRender={() => setToRerender(true)} />
                                 <ul>
-                                    {(spaces.length > 0) ? (spaces?.map((space:any, index)=>{
-                                        return(
+                                    {(tags.length > 0) ? (tags?.map((tag: any, index) => {
+                                        return (
                                             <li key={index} className="flex justify-between text-xl text-white">
                                                 <SheetTrigger asChild>
-                                                    <Link href={`/home/${space.topic_id}`}>
-                                                        {space.name}
+                                                    <Link href={`/home/tags/${tag.tag_id}`}>
+                                                        {tag.name}
                                                     </Link>
                                                 </SheetTrigger>
-                                                <Popup spaceId={space.topic_id} spaceName={space.name} toRender={()=>setToRerender(true)}/>
+                                                <TagPopup tagId={tag.tag_id} tagName={tag.name} toRender={() => setToRerender(true)} />
                                             </li>
                                         )
-                                    })):(
+                                    })) : (
                                         <div>
-                                            {/* <Skeleton className="h-4 w-5/6" />
-                                            <Skeleton className="h-4 w-3/4" /> */}
                                             <h2>Looks like you don&#39;t </h2>
-                                            <h2>have any topics yet...</h2>
+                                            <h2>have any tags yet...</h2>
                                         </div>
                                     )}
                                 </ul>
-
                             </div>
                         </div>
+
                         <button
                             className="w-full py-3 text-white font-bold bg-[#B281F6] rounded-[10px]"
-                            onClick={()=>signOut()}>
-                        Log Out
+                            onClick={() => signOut()}>
+                            Log Out
                         </button>
                     </div>
                 </SheetContent>
@@ -114,25 +120,23 @@ export default function Nav(props:{session:any}) {
             <div className="hidden bg-gradient-to-b from-[#6E43B1] to-[#E9DBFF] w-full h-full md:flex md:flex-col md:justify-between p-5">
                 <div className="flex flex-col gap-3">
                     <div className="flex gap-5 mb-3 items-center font-semibold text-xl text-white">
-                        <img src={`${props.session.user.image}`} className="h-[50px] w-[50px] rounded-[50px] bg-[#E9DBFF]"/>
+                        <img src={`${props.session.user.image}`} className="h-[50px] w-[50px] rounded-[50px] bg-[#E9DBFF]" />
                         <h2>{props.session.user.name}</h2>
                     </div>
                     <div className="max-h-[75vh] flex flex-col overflow-y-scroll no-scrollbar">
-                        <CreateSpaceInput user={props.session.user.id} toRender={()=>setToRerender(true)} />
+                        <CreateSpaceInput user={props.session.user.id} toRender={() => setToRerender(true)} />
                         <ul>
-                            {(spaces.length > 0) ? (spaces?.map((space:any, index)=>{
-                                return(
+                            {(spaces.length > 0) ? (spaces?.map((space: any, index) => {
+                                return (
                                     <li key={index} className="flex justify-between text-xl text-white">
                                         <Link href={`/home/${space.topic_id}`}>
                                             {space.name}
                                         </Link>
-                                        <Popup spaceId={space.topic_id} spaceName={space.name} toRender={()=>setToRerender(true)}/>
+                                        <Popup spaceId={space.topic_id} spaceName={space.name} toRender={() => setToRerender(true)} />
                                     </li>
                                 )
-                            })):(
+                            })) : (
                                 <div>
-                                    {/* <Skeleton className="h-4 w-5/6" />
-                                    <Skeleton className="h-4 w-3/4" /> */}
                                     <h2>Looks like you don&#39;t </h2>
                                     <h2>have any topics yet...</h2>
                                 </div>
@@ -140,33 +144,30 @@ export default function Nav(props:{session:any}) {
                         </ul>
 
 
-                        <CreateTagsInput user={props.session.user.id} toRender={()=>setToRerender(true)} />
+                        <CreateTagInput user={props.session.user.id} toRender={() => setToRerender(true)} />
                         <ul>
-                            {(spaces.length > 0) ? (spaces?.map((space:any, index)=>{
-                                return(
+                            {(tags.length > 0) ? (tags?.map((tag: any, index) => {
+                                return (
                                     <li key={index} className="flex justify-between text-xl text-white">
-                                        <Link href={`/home/${space.topic_id}`}>
-                                            {space.name}
+                                        <Link href={`/home/tags/${tag.tag_id}`}>
+                                            {tag.name}
                                         </Link>
-                                        <Popup spaceId={space.topic_id} spaceName={space.name} toRender={()=>setToRerender(true)}/>
+                                        <TagPopup tagId={tag.tag_id} tagName={tag.name} toRender={() => setToRerender(true)} />
                                     </li>
                                 )
-                            })):(
+                            })) : (
                                 <div>
-                                    {/* <Skeleton className="h-4 w-5/6" />
-                                    <Skeleton className="h-4 w-3/4" /> */}
                                     <h2>Looks like you don&#39;t </h2>
                                     <h2>have any tags yet...</h2>
                                 </div>
                             )}
                         </ul>
-
                     </div>
                 </div>
                 <button
                     className="w-full py-3 text-white font-bold bg-[#B281F6] rounded-[10px]"
-                    onClick={()=>signOut({redirect: true, callbackUrl: "/login"})}>
-                Log Out
+                    onClick={() => signOut({ redirect: true, callbackUrl: "/login" })}>
+                    Log Out
                 </button>
             </div>
         </div>

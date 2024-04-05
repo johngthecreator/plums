@@ -57,10 +57,10 @@ export default function Page({ params }: { params: { space: number } }){
         return (
             <SessionProvider>
                 <div className="flex flex-col gap-5 text-black h-full p-3 max-h-screen md:p-5">
-                    <div className="flex flex-row items-center justify-between">
+                    <div className="flex flex-col gap-3 md:flex-row items-start md:items-center justify-between">
                         <div className="flex items-center gap-3">
                             <h2 className="text-3xl font-bold"> {spaceData.name} </h2>
-                            <TopicInfo topicId={params.space} parentTopic={spaceData.parentId} />
+                            <TopicInfo topicId={params.space} parentTopic={spaceData.parentId} topicData={spaceData} />
                         </div>
                         <div className="flex flex-row gap-3">
                             <CreateNoteModal topicId={params.space} passedFunc={()=>setToRerender(true)} />
