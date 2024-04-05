@@ -45,7 +45,7 @@ export default function Page({ params }: { params: { tags: number } }){
                     }
                     {tagTopics.length > 0 && tagTopics.map((topic:any)=>{
                         return(
-                            <Link className="w-full bg-purple-200 py-4 flex flex-row justify-center text-2xl font-bold" href={`/home/${topic.topic_id}`}>
+                            <Link key={topic.topic_id} className="w-full bg-purple-200 py-4 flex flex-row justify-center text-2xl font-bold" href={`/home/${topic.topic_id}`}>
                                 {topic.name}
                             </Link>
                         )

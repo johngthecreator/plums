@@ -120,7 +120,7 @@ export default function Nav(props: { session: any }) {
             <div className="hidden bg-gradient-to-b from-[#6E43B1] to-[#E9DBFF] w-full h-full md:flex md:flex-col md:justify-between p-5">
                 <div className="flex flex-col gap-3">
                     <div className="flex gap-5 mb-3 items-center font-semibold text-xl text-white">
-                        <img src={`${props.session.user.image}`} className="h-[50px] w-[50px] rounded-[50px] bg-[#E9DBFF]" />
+                        <img src={`${props.session.user.image}`} alt="profile photo" className="h-[50px] w-[50px] rounded-[50px] bg-[#E9DBFF]" />
                         <h2>{props.session.user.name}</h2>
                     </div>
                     <div className="max-h-[75vh] flex flex-col overflow-y-scroll no-scrollbar">

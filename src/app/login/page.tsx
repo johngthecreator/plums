@@ -3,7 +3,7 @@
 
 import { signIn, signOut, useSession } from "next-auth/react"
 
-export default async function LoginPage() {
+export default function LoginPage() {
   return (
     <div className="min-h-screen flex justify-center items-center bg-gradient-to-b from-[#6E43B1] to-white">
       <div className="p-8 text-gray-200 text-center">
