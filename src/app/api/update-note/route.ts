@@ -16,7 +16,7 @@ import { createClient } from '@libsql/client'
     try {
       const newNote = await prisma.note.update({
         where: {
-            note_id: Number(body.noteId),  // Use note_id from the request to find the note
+            note_id: Number(body.noteId), 
           },
           data: {
             title: body.title,

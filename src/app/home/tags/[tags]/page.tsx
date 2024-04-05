@@ -1,27 +1,15 @@
 "use client";
-import AddLinkModal from "@/components/AddLinkModal";
-import CreateNoteModal from "@/components/CreateNoteModal";
-import LinkPreview from "@/components/LinkPreview";
-import NotePreview from "@/components/NotePreview";
-import UploadFileModal from "@/components/UploadFileModal";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 import Link from "next/link";
-
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-  } from "@/components/ui/accordion"
-import ImagePreview from "@/components/ImagePreview";
-import TopicInfo from "@/components/TopicInfo";
-import { SessionProvider } from "next-auth/react";
 
 export default function Page({ params }: { params: { tags: number } }){
     const [toRender, setToRerender] = useState<boolean>(false);
     const [tagTopics, setTagTopics] = useState<any>(null);
+
+    const router = useRouter();
 
     useEffect(()=>{
         setToRerender(false);
@@ -30,7 +18,13 @@ export default function Page({ params }: { params: { tags: number } }){
 
     const getTagTopics = () => {
         axios.get(`/api/get-tag-topics?tag-id=${params.tags}`)
-        .then(resp=>setTagTopics(resp.data));
+        .then(resp=>setTagTopics(resp.data))
+        .catch(error=>{
+            console.error(error);
+            alert("Sorry! That tag doesn't exist.");
+            router.push("/home/tags")
+            
+        });
     }
 
 

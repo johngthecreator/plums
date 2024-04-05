@@ -2,13 +2,11 @@ import { PrismaClient } from '@prisma/client';
 import { PrismaLibSQL } from '@prisma/adapter-libsql';
 import { createClient } from '@libsql/client';
 
-// Initialize your LibSQL client with your environment variables
 const libsql = createClient({
   url: `${process.env.TURSO_DATABASE_URL}`,
   authToken: `${process.env.TURSO_AUTH_TOKEN}`,
 });
 
-// Use the LibSQL adapter with your Prisma client
 const adapter = new PrismaLibSQL(libsql);
 const prisma = new PrismaClient({ adapter });
 
@@ -17,10 +15,10 @@ export async function POST(req: Request) {
   try {
     const updatedTopic = await prisma.topic.update({
       where: {
-        topic_id: Number(body.topicId), // Specify which topic to update using its ID
+        topic_id: Number(body.topicId), 
       },
       data: {
-        parentId: Number(body.parentId), // Set the new parentId for the topic
+        parentId: Number(body.parentId), 
       },
     });
     return new Response(JSON.stringify(updatedTopic), {

@@ -10,7 +10,6 @@ import { createClient } from '@libsql/client'
   const adapter = new PrismaLibSQL(libsql)
   const prisma = new PrismaClient({ adapter })
 
-// change these to url parameters
 export async function DELETE(req: Request) {
     const { searchParams } = new URL(req.url)
     const id = searchParams.get('id');

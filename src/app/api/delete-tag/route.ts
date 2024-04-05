@@ -15,7 +15,6 @@ export async function DELETE(req: Request) {
     const tag_id = searchParams.get('tag-id');
   
   try {
-    // Step 1: Find all topics associated with the tag
     const topics = await prisma.topic.findMany({
       where: {
         tags: {
@@ -26,7 +25,6 @@ export async function DELETE(req: Request) {
       },
     });
 
-    // Step 2: Disconnect the tag from each topic
     for (const topic of topics) {
       await prisma.topic.update({
         where: { topic_id: topic.topic_id },
@@ -38,7 +36,6 @@ export async function DELETE(req: Request) {
       });
     }
 
-    // Step 3: Delete the tag
     await prisma.tag.delete({
       where: { tag_id: Number(tag_id) },
     });
