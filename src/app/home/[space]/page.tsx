@@ -55,7 +55,7 @@ export default function Page({ params }: { params: { space: number } }){
 
 
     if (spaceData?.success == false) {
-        return <div className="w-full h-full flex justify-center items-center gap-3 text-center"><h2 className="text-2xl"><span className="text-black text-3xl font-bold">Sorry!</span> <br />This topic doesn't exist.</h2></div>
+        return <div className="w-full h-full flex justify-center items-center gap-3 text-center"><h2 className="text-2xl"><span className="text-black text-3xl font-bold">Sorry!</span> <br />This topic doesn&#39;t exist.</h2></div>
     }else if(spaceData && notesData && imagesData && linksData ){
         return (
             <SessionProvider>
