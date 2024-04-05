@@ -115,7 +115,7 @@ export default function TopicInfo(props: { topicId: number, parentTopic: number,
                     })}
                 </select>
                 <div className="grid grid-cols-2 gap-2 pb-3 border-b-2">
-                    <Link href={`${props.parentTopic}`} className="p-2 text-center border">Visit Parent</Link>
+                    <Link href={`${parentTopicDetails.id}`} className="p-2 text-center border">Visit Parent</Link>
                     <DialogTrigger>
                         <button className="w-full bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4" onClick={updateParent}>Update Parent</button>
                     </DialogTrigger>

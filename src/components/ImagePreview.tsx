@@ -16,11 +16,11 @@ export default function ImagePreview(props:{title:string, imageURL:string, image
         alert("Oh no! Something went wrong. Please try again.");
     } else {
         try {
-            const response = await axios.post('/api/update-image', {
+            axios.post('/api/update-image', {
                 imageId: props.imageId,
                 title: title,
-            });
-            console.log(response);
+            })
+            .then(resp => console.log(resp));
             props.passedFunc();
         } catch (error) {
             console.error("Request error", error);

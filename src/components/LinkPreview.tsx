@@ -23,7 +23,8 @@ export default function LinkPreview(props:{title:string, link:string, linkId:num
               url: link,
               description: description 
           })
-          .then(resp=>console.log(resp))
+          .then(resp=>console.log(resp));
+          props.passedFunc();
       }
   }
 

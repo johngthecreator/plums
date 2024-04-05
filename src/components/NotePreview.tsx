@@ -21,6 +21,8 @@ export default function NotePreview(props:{title:string, text:string, noteId:num
               text: text 
           })
           .then(resp=>console.log(resp))
+          .catch(error => console.error(error));
+          props.passedFunc();
       }
   }
 
