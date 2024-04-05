@@ -29,7 +29,12 @@ export async function GET(req:Request) {
       }
     } catch (error) {
       console.error('Request error', error);
-      return Response.json({ status: 500, body: { error: 'Error getting links by topicId', success: false } });
+      return new Response(JSON.stringify({ error: 'Error getting links. It may not exist or another error occurred.', success: false }), {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
     }
   }
   

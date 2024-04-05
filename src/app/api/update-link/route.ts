@@ -27,6 +27,11 @@ import { createClient } from '@libsql/client'
       return Response.json(newNote);
     } catch (error) {
       console.error('Request error', error);
-      return Response.json({ error: 'Error updating url', success: false });
+      return new Response(JSON.stringify({ error: 'Error updating link. It may not exist or another error occurred.', success: false }), {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
     }
   } 

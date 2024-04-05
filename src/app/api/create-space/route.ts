@@ -22,6 +22,11 @@ export async function POST(req: Request) {
     return Response.json(newSpace);
   } catch (error) {
     console.error('Request error', error);
-    return Response.json({ error: 'Error creating space', success: false });
+    return new Response(JSON.stringify({ error: 'Error creating space.', success: false }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 } 

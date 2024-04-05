@@ -23,8 +23,13 @@ export async function GET(req: Request) {
       }
     });
     return Response.json(allSpaces);
-  } catch (error) {
+  }catch (error) {
     console.error('Request error', error);
-    return Response.json({ error: 'Error getting spaces', success: false });
+    return new Response(JSON.stringify({ error: 'Error getting spaces. It may not exist or another error occurred.', success: false }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 }

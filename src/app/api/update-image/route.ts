@@ -25,6 +25,11 @@ import { createClient } from '@libsql/client'
       return Response.json(newImage);
     } catch (error) {
       console.error('Request error', error);
-      return Response.json({ status: error, error: 'Error updating image', success: false });
+      return new Response(JSON.stringify({ error: 'Error updating image. It may not exist or another error occurred.', success: false }), {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
     }
   } 
